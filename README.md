@@ -8,7 +8,7 @@ Bu proje, **Fonet Bilgi Teknolojileri A.Ş.** tarafından Java Yazılım Gelişt
 
 ##  Veritabanı Şeması
 
-Uygulama, üç temel tablo üzerinde şekillenmektedir: `emlak`, `musteri` ve `isletme`. Bu tablolar birbiriyle ilişkili olarak çalışmakta ve emlak yönetim süreçlerini modellemektedir. Aşağıda hem tablo yapıları hem de ilişkiler görsellerle açıklanmıştır.
+Uygulama,  temelde üç tablo üzerinde şekillenmektedir: `emlak`, `musteri` ve `isletme`. Bu tablolar birbiriyle ilişkili olarak çalışmakta ve emlak yönetim süreçlerini modellemektedir. Aşağıda hem tablo yapıları hem de ilişkiler aşağıda görsellerle açıklanmıştır.
 
 ---
 
