@@ -4,7 +4,7 @@
 
 
 ## 
-Bu proje, **Fonet Bilgi Teknolojileri A.Ş.** tarafından Java Yazılım Geliştirme Uzmanı adaylarını değerlendirmek amacıyla verilen bir emlak yönetim sistemi, Java ile ‘Emlak İşletmeleri’ proje örneğidir. Kullanıcı dostu bir arayüz ile, emlak ofislerinin işletme, müşteri ve emlak yönetimini dijital olarak gerçekleştirmesi sağlanmıştır. Kiralık veya satılık daireleri arayabilme, uygun eşleşmeleri listeleme ve yazdırılabilir emlak bilgileri gibi işlevler bu sistem aracılığıyla sunulmuştur. Hem işletmeler hem de bireysel müşteriler için süreçlerin kolaylaştırılması hedeflenmiştir.Proje dosyaları içinde tüm kodlar açık bir şekilde sunulmuş , uygulamanın testi açıklayıcı bir video ile anlatılmıştır, mp4 kayıt dosyasına erişip uygulamanın kullanım videosunu izleyebilirsiniz.
+Bu proje, **Fonet Bilgi Teknolojileri A.Ş.** tarafından Java Yazılım Geliştirme Uzmanı adaylarını değerlendirmek amacıyla verilen bir emlak yönetim sistemi, Java ile ‘Emlak İşletmeleri’ proje örneğidir. Kullanıcı dostu bir arayüz ile, emlak ofislerinin işletme, müşteri ve emlak yönetimini dijital olarak gerçekleştirmesi sağlanmıştır. Kiralık veya satılık daireleri arayabilme, uygun eşleşmeleri listeleme ve yazdırılabilir emlak bilgileri gibi işlevler bu sistem aracılığıyla sunulmuştur. Hem işletmeler hem de bireysel müşteriler için süreçlerin kolaylaştırılması hedeflenmiştir.Proje dosyaları içinde tüm kodlar açık bir şekilde sunulmuş , uygulamanın testi açıklayıcı bir video ile anlatılmıştır, mp4 kayıt dosyasına erişip uygulamanın kullanım videosunu indirerek izleyebilirsiniz (yaklaşık 1.5 dakika olduğu için ön izleme yapılamıyor).
 
 ##  Veritabanı Şeması
 
