@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ana Sayfa - Emlak Sistemi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            background-color: #1e1e1e;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            border-bottom: 2px solid #444;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .header img {
+            height: 64px;
+        }
+
+        .header span {
+            font-size: 48px;
+            font-weight: 700;
+            color: #e0e0e0;
+        }
+
+        .main-content {
+            padding: 40px 20px;
+        }
+
+        a.button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 25px;
+            margin: 10px;
+            background-color: #666666;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        a.button:hover {
+            background-color: #555555;
+            transform: translateY(-2px);
+        }
+
+        a.button svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.2;
+        }
+
+        .section {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.05);
+            text-align: left;
+        }
+
+        .section h2 {
+            color: #ffffff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        input, select, button {
+            width: calc(100% - 20px);
+            margin: 8px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        input, select {
+            background: #2b2b2b;
+            color: #ddd;
+        }
+
+        button {
+            background-color: #666666;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #555555;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: #ccc;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .print-btn {
+            background-color: #444;
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .main-image {
+                width: 100%;
+            }
+
+            a.button {
+                width: 90%;
+                margin: 10px auto;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .header img {
+                height: 32px;
+            }
+            .emlak-card {
+                background-color: #2a2a2a;
+                border-radius: 8px;
+                padding: 15px 20px;
+                margin-bottom: 16px;
+                color: #eee;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            }
+
+            .emlak-card .emlak-baslik {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 8px;
+                color: #ffffff;
+            }
+
+            .emlak-card p {
+                margin: 4px 0;
+                font-size: 14px;
+            }
+
+            .emlak-card button.print-btn {
+                margin-top: 10px;
+                background-color: #444;
+                padding: 6px 12px;
+                font-size: 13px;
+                border-radius: 4px;
+                color: #fff;
+                cursor: pointer;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="images/emlak.jpg" alt="Logo">
+    <span>Bi'tıkla Emlak</span>
+</div>
+
+<div class="main-content">
+
+    <a href="isletme.html" class="button"><i data-feather="briefcase"></i> İşletme Kaydı</a>
+    <a href="musteri.html" class="button"><i data-feather="users"></i> Müşteri Kaydı</a>
+
+    <div class="section">
+        <h2>Aradığın özellikteki evi bul</h2>
+        <input type="number" id="aramaMusteriId" placeholder="Müşteri ID">
+        <select id="aramaTur">
+            <option value="kiralik">Kiralık</option>
+            <option value="satilik">Satılık</option>
+        </select>
+        <input type="number" id="minMetrekare" placeholder="Min m²">
+        <input type="number" id="maxMetrekare" placeholder="Max m²">
+        <input type="number" id="minOda" placeholder="Min Oda">
+        <input type="number" id="maxOda" placeholder="Max Oda">
+        <input type="text" id="aramaIsinma" placeholder="Isınma Türü">
+        <button onclick="aramaTalebiEkle()">Ara</button>
+        <ul id="sonuclar"></ul>
+    </div>
+
+    <div class="section">
+        <h2>İşletmeye Göre Emlak Filtrele</h2>
+        <input type="number" id="filtreIsletmeId" placeholder="İşletme ID">
+        <button onclick="filtreleEmlak()">Filtrele</button>
+        <ul id="filtreliEmlakListesi"></ul>
+    </div>
+</div>
+
+<script>
+    feather.replace();
+
+    const api = path => `http://localhost:8080/api/${path}`;
+    let emlaklar = {}; // yazdırılabilir emlak nesneleri burada tutulur
+
+    // Gelen uygun emlaklar listeye yazılıyor.
+    function aramaTalebiEkle() {
+        fetch(api('arama-talebi'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                musteri: { id: aramaMusteriId.value },
+                tur: aramaTur.value,
+                minMetrekare: minMetrekare.value,
+                maxMetrekare: maxMetrekare.value,
+                minOda: minOda.value,
+                maxOda: maxOda.value,
+                isinma: aramaIsinma.value
+            })
+        })
+            .then(res => res.json())
+            .then(list => {
+                sonuclar.innerHTML = '';
+                emlaklar = {}; // Önceki veriler temizlemek için
+                list.forEach(e => {
+                    emlaklar[e.id] = e; // her emlakı belleğe al
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                <div class="emlak-card">
+                    <div class="emlak-baslik">Daire #${e.id} - ${e.tur.charAt(0).toUpperCase() + e.tur.slice(1)}</div>
+                    <div class="emlak-detay">
+                        <p><strong>Metrekare:</strong> ${e.metrekare} m²</p>
+                        <p><strong>Oda Sayısı:</strong> ${e.odaSayisi}</p>
+                        <p><strong>Kat:</strong> ${e.kat} / ${e.binaKati}</p>
+                        <p><strong>Isınma:</strong> ${e.isinma}</p>
+                        <p><strong>Durum:</strong> ${e.durum}</p>
+                    </div>
+                    <button class="print-btn" onclick="yazdirEmlak(${e.id})">Yazdır</button>
+                </div>
+            `;
+                    sonuclar.appendChild(li);
+                });
+            });
+    }
+
+    // Belirli bir işletmeye ait emlakları filtrele
+    function filtreleEmlak() {
+        const isletmeId = filtreIsletmeId.value.trim();
+
+        if (!isletmeId) {
+            alert("Lütfen bir İşletme ID girin.");
+            return;
+        }
+
+        fetch(api(`emlak?isletmeId=${isletmeId}`))
+            .then(res => res.json())
+            .then(list => {
+                filtreliEmlakListesi.innerHTML = '';
+                if (list.length === 0) {
+                    filtreliEmlakListesi.innerHTML = '<li>Uygun kayıt bulunamadı.</li>';
+                    return;
+                }
+                list.forEach(e => {
+                    const li = document.createElement('li');
+                    li.innerText = `#${e.id} - ${e.tur} - ${e.metrekare} m² - ${e.odaSayisi} oda - ${e.durum}`;
+                    filtreliEmlakListesi.appendChild(li);
+                });
+            });
+    }
+
+    // Seçilen emlak bilgilerini yazdırma.
+    function yazdirEmlak(id) {
+        const emlak = emlaklar[id];
+        const w = window.open('', '_blank');
+        w.document.write(`
+            <html>
+            <head>
+                <title>Emlak Yazdır</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 40px; color: #000; }
+                    h2 { border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+                    p { margin: 6px 0; }
+                </style>
+            </head>
+            <body>
+                <h2>Emlak Bilgileri</h2>
+                <p><strong>ID:</strong> ${emlak.id}</p>
+                <p><strong>Tür:</strong> ${emlak.tur}</p>
+                <p><strong>Metrekare:</strong> ${emlak.metrekare} m²</p>
+                <p><strong>Oda Sayısı:</strong> ${emlak.odaSayisi}</p>
+                <p><strong>Kat:</strong> ${emlak.kat} / ${emlak.binaKati}</p>
+                <p><strong>Isınma:</strong> ${emlak.isinma}</p>
+                <p><strong>Durum:</strong> ${emlak.durum}</p>
+                <script>
+                    window.onload = function() {
+                        window.print();
+                    };
+                <\/script>
+            </body>
+            </html>
+        `);
+        w.document.close();
+    }
+</script>
+
+</body>
+</html>

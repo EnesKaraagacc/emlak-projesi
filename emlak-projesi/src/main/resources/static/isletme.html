@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>İşletme Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .header i {
+            color: #fff;
+            width: 36px;
+            height: 36px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .section {
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+            border-left: 5px solid #666666;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 22px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .form-row input,
+        .form-row select {
+            flex: 1 1 160px;
+            min-width: 150px;
+            padding: 10px;
+            background-color: #2b2b2b;
+            color: #ddd;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #666666;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #555555;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: #ccc;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header i {
+                width: 28px;
+                height: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <i data-feather="briefcase"></i>
+    <h1>İşletme Paneli</h1>
+</div>
+
+<div class="section">
+    <h2><i data-feather="plus-square"></i> İşletme Ekle ve Listele</h2>
+    <div class="form-row">
+        <input type="text" id="isletmeAd" placeholder="İşletme Adı">
+        <input type="text" id="isletmeYetkili" placeholder="Yetkili Kişi">
+        <input type="text" id="isletmeAdres" placeholder="Adres">
+        <input type="text" id="isletmeTel" placeholder="Telefon">
+        <input type="text" id="isletmeFax" placeholder="Fax">
+    </div>
+    <button onclick="ekleIsletme()"><i data-feather="save"></i> Ekle</button>
+    <button onclick="listeleIsletmeler()"><i data-feather="list"></i> Listele</button>
+    <p id="isletmeEkleSonuc"></p>
+    <ul id="isletmeListesi"></ul>
+</div>
+
+<div class="section">
+    <h2><i data-feather="home"></i> Emlak Ekle (İşletmeye Bağlı)</h2>
+    <div class="form-row">
+        <input type="number" id="emlakMusteriId" placeholder="Müşteri ID">
+        <input type="number" id="emlakIsletmeId" placeholder="İşletme ID">
+        <select id="tur">
+            <option value="kiralik">Kiralık</option>
+            <option value="satilik">Satılık</option>
+        </select>
+        <input type="number" id="metrekare" placeholder="Metrekare">
+        <input type="number" id="odaSayisi" placeholder="Oda Sayısı">
+        <input type="number" id="kat" placeholder="Kat">
+        <input type="number" id="binaKati" placeholder="Bina Katı">
+        <input type="text" id="isinma" placeholder="Isınma Türü">
+        <input type="text" id="durum" placeholder="Durum (aktif)">
+    </div>
+    <button onclick="ekleEmlak()"><i data-feather="plus"></i> Ekle</button>
+    <ul id="emlakListesi"></ul>
+</div>
+
+<script>
+    feather.replace();
+    const api = path => `http://localhost:8080/api/${path}`;
+
+    // Yeni işletme ekle
+    function ekleIsletme() {
+        fetch(api('isletme'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ad: isletmeAd.value,
+                yetkili: isletmeYetkili.value,
+                adres: isletmeAdres.value,
+                telefon: isletmeTel.value,
+                fax: isletmeFax.value
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                isletmeEkleSonuc.innerText = `İşletme ID: ${data.id} eklendi (${data.ad})`;
+            });
+    }
+
+    // Tüm işletmeleri listele ve HTML'e yaz
+    function listeleIsletmeler() {
+        fetch(api('isletme'))
+            .then(res => res.json())
+            .then(list => {
+                isletmeListesi.innerHTML = '';
+                list.forEach(i => {
+                    const li = document.createElement('li');
+                    li.innerText = `#${i.id} - ${i.ad} | Yetkili: ${i.yetkili || '-'} | Tel: ${i.telefon || '-'} | Fax: ${i.fax || '-'}`;
+                    isletmeListesi.appendChild(li);
+                });
+            });
+    }
+
+    // Yeni bir emlak, ilgili işletmeye ve müşteriye bağlı olarak sisteme kaydet
+    function ekleEmlak() {
+        fetch(api('emlak'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                musteri: { id: emlakMusteriId.value },
+                isletme: { id: emlakIsletmeId.value },
+                tur: tur.value,
+                metrekare: metrekare.value,
+                odaSayisi: odaSayisi.value,
+                kat: kat.value,
+                binaKati: binaKati.value,
+                isinma: isinma.value,
+                durum: durum.value
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                const li = document.createElement('li');
+                li.innerText = `Emlak eklendi: ID ${data.id}`;
+                emlakListesi.appendChild(li);
+            });
+    }
+</script>
+
+</body>
+</html>

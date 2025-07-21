@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Müşteri Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .header i {
+            color: #fff;
+            width: 36px;
+            height: 36px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        .section {
+            background-color: #1f1f1f;
+            border-left: 5px solid #666666;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.05);
+        }
+
+        h2 {
+            font-size: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .form-row input,
+        .form-row select {
+            flex: 1 1 160px;
+            min-width: 150px;
+            padding: 10px;
+            background-color: #2b2b2b;
+            color: #ddd;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #666666;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #555555;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: #ccc;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <i data-feather="user"></i>
+    <h1>Müşteri Paneli</h1>
+</div>
+
+<div class="section">
+    <h2><i data-feather="user-plus"></i> Müşteri Ekle / Güncelle</h2>
+    <div class="form-row">
+        <input type="text" id="ad" placeholder="Ad">
+        <input type="text" id="soyad" placeholder="Soyad">
+        <input type="text" id="evTel" placeholder="Ev Telefonu">
+        <input type="text" id="cepTel" placeholder="Cep Telefonu">
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="number" id="musteriIsletmeId" placeholder="İşletme ID">
+    </div>
+    <button onclick="ekleMusteri()"><i data-feather="save"></i> Kaydet</button>
+    <button onclick="listeleMusteri()"><i data-feather="list"></i> Listele</button>
+    <p id="musteriEkleSonuc"></p>
+    <ul id="musteriListesi"></ul>
+</div>
+
+<div class="section">
+    <h2><i data-feather="home"></i> Emlak Ekle (Bu Müşteriye)</h2>
+    <div class="form-row">
+        <input type="number" id="emlakMusteriId" placeholder="Müşteri ID">
+        <input type="number" id="emlakIsletmeId" placeholder="İşletme ID">
+        <select id="tur">
+            <option value="kiralik">Kiralık</option>
+            <option value="satilik">Satılık</option>
+        </select>
+        <input type="number" id="metrekare" placeholder="Metrekare">
+        <input type="number" id="odaSayisi" placeholder="Oda Sayısı">
+        <input type="number" id="kat" placeholder="Kat">
+        <input type="number" id="binaKati" placeholder="Bina Katı">
+        <input type="text" id="isinma" placeholder="Isınma Türü">
+        <input type="text" id="durum" placeholder="Durum (aktif)">
+    </div>
+    <button onclick="ekleEmlak()"><i data-feather="plus"></i> Emlak Kaydet</button>
+    <p id="emlakEkleSonuc"></p>
+</div>
+
+<script>
+    feather.replace();
+    const api = path => `http://localhost:8080/api/${path}`;
+    let musteriIdGuncelle = null;
+
+    // Müşteri ekleme veya güncelleme işlemi.
+    function ekleMusteri() {
+        const payload = {
+            ad: ad.value,
+            soyad: soyad.value,
+            evTel: evTel.value,
+            cepTel: cepTel.value,
+            email: email.value,
+            isletme: { id: musteriIsletmeId.value }
+        };
+
+        const url = musteriIdGuncelle ? api(`musteri/${musteriIdGuncelle}`) : api('musteri');
+        const method = musteriIdGuncelle ? 'PUT' : 'POST';
+
+        fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(data => {
+                musteriEkleSonuc.innerText = `Müşteri ${musteriIdGuncelle ? 'güncellendi' : 'eklendi'}: ID ${data.id}`;
+                musteriIdGuncelle = null;
+                ad.value = soyad.value = evTel.value = cepTel.value = email.value = musteriIsletmeId.value = '';
+                listeleMusteri();
+            });
+    }
+
+    // Tüm müşterileri getir ve listele.
+    function listeleMusteri() {
+        fetch(api('musteri'))
+            .then(res => res.json())
+            .then(list => {
+                musteriListesi.innerHTML = '';
+                list.forEach(m => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        #${m.id} - ${m.ad} ${m.soyad} (${m.email}) - İşletme: ${m.isletme?.ad || 'Yok'}
+                        <button onclick="hazirlaMusteriGuncelle(${m.id})">Düzenle</button>
+                        <button onclick="silMusteri(${m.id})">Sil</button>
+                    `;
+                    musteriListesi.appendChild(li);
+                });
+            });
+    }
+
+    // Seçilen müşteri sil, kullanıcıdan onay al.
+    function silMusteri(id) {
+        if (!confirm("Bu müşteri kaydını silmek istediğinize emin misiniz?")) return;
+        fetch(api(`musteri/${id}`), { method: 'DELETE' })
+            .then(() => {
+                alert("Müşteri silindi.");
+                listeleMusteri();
+            });
+    }
+
+    // Müşteri düzenleme moduna geçip form alanlarını doldurma
+    function hazirlaMusteriGuncelle(id) {
+        fetch(api(`musteri/${id}`))
+            .then(res => res.json())
+            .then(m => {
+                musteriIdGuncelle = m.id;
+                ad.value = m.ad;
+                soyad.value = m.soyad;
+                evTel.value = m.evTel;
+                cepTel.value = m.cepTel;
+                email.value = m.email;
+                musteriIsletmeId.value = m.isletme?.id || '';
+                musteriEkleSonuc.innerText = `Düzenleme modunda: Müşteri ID ${m.id}`;
+            });
+    }
+
+    function ekleEmlak() {
+        const payload = {
+            musteri: { id: emlakMusteriId.value },
+            isletme: { id: emlakIsletmeId.value },
+            tur: tur.value,
+            metrekare: metrekare.value,
+            odaSayisi: odaSayisi.value,
+            kat: kat.value,
+            binaKati: binaKati.value,
+            isinma: isinma.value,
+            durum: durum.value
+        };
+
+        fetch(api('emlak'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(data => {
+                emlakEkleSonuc.innerText = `Emlak eklendi (ID: ${data.id})`;
+            });
+    }
+</script>
+
+</body>
+</html>
