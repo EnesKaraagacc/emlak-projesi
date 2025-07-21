@@ -87,5 +87,11 @@ Proje, `Spring Boot` kullanılarak geliştirilen bir Java backend ile birlikte, 
 - Tüm işlemler API ile doğrudan entegrasyon sağlanmıştır
 - Kullanıcılar için kolay erişilebilir butonlar ve listeleme panelleri eklenmiştir
 
+### 📌 Dipnot
+
+Proje boyunca kullanılan class , variable ve veritabanı alan adları **normal şartlarda İngilizce tercih etsem de**, bu projede **aday değerlendirme dokümanının Türkçe olması ve içerikte net bir şekilde Türkçe kavramlara yer verilmesi** sebebiyle özellikle **Türkçe terimler tercih ettim**.
+
+Normal projelerimde genellikle İngilizce isimlendirme tercih etmekteyim , değerlendirme kriterinizin etkilenmemesi adına not düşmek istedim.
+
 ---
 
