@@ -4,7 +4,7 @@
 
 
 ## 
-Bu proje, **Fonet Bilgi Teknolojileri A.Ş.** tarafından Java Yazılım Geliştirme Uzmanı adaylarını değerlendirmek amacıyla verilen bir emlak yönetim sistemi, Java ile ‘Emlak İşletmeleri’ proje örneğidir. Kullanıcı dostu bir arayüz ile, emlak ofislerinin işletme, müşteri ve emlak yönetimini dijital olarak gerçekleştirmesi sağlanmıştır. Kiralık veya satılık daireleri arayabilme, uygun eşleşmeleri listeleme ve yazdırılabilir emlak bilgileri gibi işlevler bu sistem aracılığıyla sunulmuştur. Hem işletmeler hem de bireysel müşteriler için süreçlerin kolaylaştırılması hedeflenmiştir.Proje dosyaları içinde tüm kodlar açık bir şekilde sunulmuş , uygulamanın testi açıklayıcı bir video ile anlatılmıştır, mp4 kayıt dosyasına erişip uygulamanın kullanım videosunu indirerek izleyebilirsiniz (yaklaşık 1.5 dakika olduğu için ön izleme yapılamıyor).
+Bu proje, **Fonet Bilgi Teknolojileri A.Ş.** tarafından Java Yazılım Geliştirme Uzmanı adaylarını değerlendirmek amacıyla verilen bir emlak yönetim sistemi, Java ile ‘Emlak İşletmeleri’ proje örneğidir. Kullanıcı dostu bir arayüz ile, emlak ofislerinin işletme, müşteri ve emlak yönetimini dijital olarak gerçekleştirmesi hedeflenmiştir. Kiralık veya satılık daireleri arayabilme, uygun eşleşmeleri listeleme ve yazdırılabilir emlak bilgileri gibi işlevler bu sistem aracılığıyla sunulmuştur. Hem işletmeler hem de bireysel müşteriler için süreçlerin kolaylaştırılması hedeflenmiştir.Proje dosyaları içinde tüm kodlar açık bir şekilde sunulmuş , uygulamanın testi açıklayıcı bir video ile anlatılmıştır, mp4 kayıt dosyasına erişip uygulamanın kullanım videosunu indirerek izleyebilirsiniz (yaklaşık 1.5 dakika olduğu için ön izleme yapılamıyor).
 
 ##  Veritabanı Şeması
 
@@ -14,7 +14,7 @@ Uygulama, üç temel tablo üzerinde şekillenmektedir: `emlak`, `musteri` ve `i
 
 ###  Emlak Tablosu (`emlak`)
 
-Bu tablo, sisteme kayıtlı tüm gayrimenkulleri (kiralık veya satılık) temsil eder. Her emlak, bir müşteriye (sahibi) ve bir işletmeye (aracılık eden emlak ofisi) bağlıdır.
+Bu tablo, sisteme kayıtlı tüm emlakları (kiralık veya satılık) temsil eder. Her emlak, bir müşteriye (sahibi) ve bir işletmeye (aracılık eden emlak ofisi) bağlıdır.
 
 **Alanlar:**
 - `id`: Emlak kaydının kimliği 
@@ -62,13 +62,13 @@ Emlak alım, satım veya kiralama işlemlerine dahil olan kişilere ait bilgiler
 ---
 
 
-Bu yapılar sayesinde her emlak bir müşteriye ve bir işletmeye bağlı, her müşteri ise bir işletme altında yönetilmektedir. Bu da sistemi "birey–firma–emlak" üçgeni etrafında organize etmektedir.
+Bu yapılar sayesinde her emlak bir müşteriye ve bir işletmeye bağlı, her müşteri ise bir işletme altında yönetilebilmektedir. Bu da sistemi "birey–ev sahibi–emlak" üçgeni etrafında organize etmektedir.
 
 
 
 ##  Uygulama Özeti
 
-Uygulama; işletmelerin, müşterilerin ve emlak kayıtlarının yönetilebildiği, aynı zamanda müşterilerin kriterlerine göre uygun kiralık veya satılık dairelerin arandığı bir web sistemidir. Kullanıcılar yeni işletmeler ve müşteriler ekleyebilir, bu müşterilere bağlı emlak kayıtları oluşturabilir. Arama talepleri ile metrekare, oda sayısı ve ısınma türü gibi kriterlere göre filtreleme yapılabilir. Uygun bulunan emlaklar liste halinde gösterilir ve yazdırılabilir çıktı olarak alınabilir. Tüm bu işlemler, modern ve responsive bir arayüz ile sunulmuştur.
+Uygulama; işletmelerin, müşterilerin ve emlak kayıtlarının yönetilebildiği, aynı zamanda müşterilerin kriterlerine göre uygun kiralık veya satılık dairelerin arandığı bir web sistemidir. Kullanıcılar yeni işletmeler ve müşteriler ekleyebilir, bu müşterilere bağlı emlak kayıtları oluşturabilir. Arama talepleri ile metrekare, oda sayısı ve ısınma türü gibi kriterlere göre filtreleme yapılabilir. Uygun bulunan emlaklar liste halinde gösterilir ve yazdırılabilir çıktı olarak alınabilir.
 
 ## Teknik Yapı
 
@@ -91,7 +91,7 @@ Proje, `Spring Boot` kullanılarak geliştirilen bir Java backend ile birlikte, 
 
 Proje boyunca kullanılan class , variable ve veritabanı alan adları **normal şartlarda İngilizce tercih etsem de**, bu projede **aday değerlendirme dokümanının Türkçe olması ve içerikte net bir şekilde Türkçe kavramlara yer verilmesi** sebebiyle özellikle **Türkçe terimler tercih ettim**.
 
-Normal projelerimde genellikle İngilizce isimlendirme tercih etmekteyim , değerlendirme kriterinizin etkilenmemesi adına not düşmek istedim.
+Projelerimde genellikle İngilizce isimlendirme tercih etmekteyim , değerlendirme kriterinizin etkilenmemesi adına not düşmek istedim.
 
 ---
 
