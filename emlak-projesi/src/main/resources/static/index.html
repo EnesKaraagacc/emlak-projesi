@@ -222,7 +222,7 @@
     const api = path => `http://localhost:8080/api/${path}`;
     let emlaklar = {}; // yazdırılabilir emlak nesneleri burada tutulur
 
-    // Gelen uygun emlaklar listeye yazılıyor.
+    // Gelen uygun emlakları listeye yaz.
     function aramaTalebiEkle() {
         fetch(api('arama-talebi'), {
             method: 'POST',
@@ -240,7 +240,7 @@
             .then(res => res.json())
             .then(list => {
                 sonuclar.innerHTML = '';
-                emlaklar = {}; // Önceki veriler temizlemek için
+                emlaklar = {}; // Önceki verileri temizlemek için
                 list.forEach(e => {
                     emlaklar[e.id] = e; // her emlakı belleğe al
                     const li = document.createElement('li');
@@ -287,7 +287,7 @@
             });
     }
 
-    // Seçilen emlak bilgilerini yazdırma.
+    // Seçilen emlak bilgilerini yazdır.
     function yazdirEmlak(id) {
         const emlak = emlaklar[id];
         const w = window.open('', '_blank');
